@@ -6,6 +6,7 @@ import {
   Pagination,
   Scrollbar,
 } from "swiper/modules";
+import "swiper/swiper-bundle.css";
 
 const Slider = () => {
   return (
