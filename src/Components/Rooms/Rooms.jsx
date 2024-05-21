@@ -1,15 +1,65 @@
 import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 import RoomCard from "./RoomCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Rooms = () => {
-  const rooms = useLoaderData();
+  const data = useLoaderData();
+  const [rooms, setRooms] = useState(data);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const start = parseInt(e.target.start.value);
+    const end = parseInt(e.target.end.value);
+    const filterData = { start, end };
+
+    await axios
+      .post(`${import.meta.env.VITE_API_LINK}/filteredRooms`, filterData)
+      .then((data) => {
+        setRooms(data.data);
+      });
+  };
+
+  console.log(rooms);
   return (
     <div>
       <Helmet>
         <title>Rooms</title>
       </Helmet>
-
+      <div>
+        <h2 className="text-center text-2xl">Filter By Price</h2>
+        <form
+          onSubmit={handleSubmit}
+          className="flex gap-5 justify-center
+        "
+        >
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">Start Price</span>
+            </div>
+            <input
+              type="number"
+              name="start"
+              placeholder="Type here"
+              className="input input-bordered w-full max-w-xs"
+            />
+          </label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">End Price</span>
+            </div>
+            <input
+              type="number"
+              name="end"
+              placeholder="Type here"
+              className="input input-bordered w-full max-w-xs"
+            />
+          </label>
+          <button className="btn bg-orange-500 text-white mt-9" type="submit">
+            Filter
+          </button>
+        </form>
+      </div>
       <div className="overflow-x-auto">
         <h2 className="text-3xl font-bold text-center">All Rooms</h2>
         <table className="table">
