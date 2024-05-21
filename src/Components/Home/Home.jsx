@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Map from "./Map";
 import Newsletter from "./Newsletter";
 import Slider from "./Slider";
@@ -5,6 +6,9 @@ import Slider from "./Slider";
 const Home = () => {
   return (
     <div>
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
       <Slider />
       <div className="mt-12 text-center">
         <h2 className="font-bold text-3xl mb-5">Find Us Easily!</h2>

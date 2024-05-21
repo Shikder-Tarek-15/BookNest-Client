@@ -4,6 +4,7 @@ import Home from "../Components/Home/Home";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Login from "../Components/Login/Login";
 import Register from "../Components/Register/Register";
+import Rooms from "../Components/Rooms/Rooms";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "rooms",
+        element: <Rooms />,
+        loader: () => fetch(`${import.meta.env.VITE_API_LINK}/allRooms`),
       },
     ],
   },
