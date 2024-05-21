@@ -1,0 +1,95 @@
+
+   [
+      {
+        "roomDescription": "Deluxe Room with Ocean View",
+        "pricePerNight": 199.99,
+        "roomSize": "30 sqm",
+        "availability": true,
+        "roomImage": "https://i.ibb.co/2MKQmCk/deluxe-room.jpg",
+        "specialOffers": "Breakfast included",
+        "reviews": []
+      },
+      {
+        "roomDescription": "Standard Room with Garden View",
+        "pricePerNight": 129.99,
+        "roomSize": "25 sqm",
+        "availability": true,
+        "roomImage": "https://i.ibb.co/1JSvTDQ/Standard-Room-Garden-View.jpg",
+        "specialOffers": null,
+        "reviews": []
+      },
+      {
+        "roomDescription": "Suite with City View",
+        "pricePerNight": 299.99,
+        "roomSize": "50 sqm",
+        "availability": true,
+        "roomImage": "https://i.ibb.co/HgFjV55/grand-suite.jpg",
+        "specialOffers": "Breakfast included",
+        "reviews": []
+      },
+      {
+        "roomDescription": "Economy Room",
+        "pricePerNight": 79.99,
+        "roomSize": "15 sqm",
+        "availability": true,
+        "roomImage": "https://i.ibb.co/2Y1pB4d/economy-room.jpg",
+        "specialOffers": null,
+        "reviews": []
+      },
+      {
+        "roomDescription": "Family Room",
+        "pricePerNight": 179.99,
+        "roomSize": "40 sqm",
+        "availability": true,
+        "roomImage": "https://i.ibb.co/1fpc0wz/family-room.jpg",
+        "specialOffers": "Kids stay free",
+        "reviews": []
+      },
+      {
+        "roomDescription": "Presidential Suite",
+        "pricePerNight": 499.99,
+        "roomSize": "80 sqm",
+        "availability": true,
+        "roomImage": "https://i.ibb.co/zG26SQ4/presidential-suite.jpg",
+        "specialOffers": "VIP airport transfer",
+        "reviews": []
+      },
+      {
+        "roomDescription": "Single Room",
+        "pricePerNight": 99.99,
+        "roomSize": "20 sqm",
+        "availability": true,
+        "roomImage": "https://i.ibb.co/fdWxGZB/single-room.jpg",
+        "specialOffers": null,
+        "reviews": []
+      },
+      {
+        "roomDescription": "Double Room",
+        "pricePerNight": 149.99,
+        "roomSize": "25 sqm",
+        "availability": true,
+        "roomImage": "https://i.ibb.co/kx2YGT6/double-room.jpg",
+        "specialOffers": "Free parking",
+        "reviews": []
+      },
+      {
+        "roomDescription": "King Suite",
+        "pricePerNight": 399.99,
+        "roomSize": "60 sqm",
+        "availability": true,
+        "roomImage": "https://i.ibb.co/HnWk4xq/king-suite.jpg",
+        "specialOffers": "Complimentary dinner",
+        "reviews": []
+      },
+      {
+        "roomDescription": "Penthouse Suite",
+        "pricePerNight": 599.99,
+        "roomSize": "100 sqm",
+        "availability": true,
+        "roomImage": "https://i.ibb.co/mtFScY2/penthouse-suite.jpg",
+        "specialOffers": "Private butler",
+        "reviews": []
+      }
+    ]
+
+  
