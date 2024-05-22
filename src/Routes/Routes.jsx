@@ -5,6 +5,7 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 import Login from "../Components/Login/Login";
 import Register from "../Components/Register/Register";
 import Rooms from "../Components/Rooms/Rooms";
+import RoomDetails from "../Components/Rooms/RoomDetails";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,13 @@ const router = createBrowserRouter([
       {
         path: "rooms",
         element: <Rooms />,
-        loader: () => fetch(`${import.meta.env.VITE_API_LINK}/allRooms`),
+        loader: () => fetch(`${import.meta.env.VITE_API_LINK}/availableRooms`),
+      },
+      {
+        path: "roomDetails/:id",
+        element: <RoomDetails />,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_LINK}/roomDetails/${params.id}`),
       },
     ],
   },

@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 import RoomCard from "./RoomCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const Rooms = () => {
@@ -61,16 +61,16 @@ const Rooms = () => {
         </form>
       </div>
       <div className="overflow-x-auto">
-        <h2 className="text-3xl font-bold text-center">All Rooms</h2>
+        <h2 className="text-3xl font-bold text-center mt-8 mb-5">All Rooms</h2>
         <table className="table">
           {/* head */}
           <thead>
             <tr>
-              <th>
+              {/* <th>
                 <label>
                   <input type="checkbox" className="checkbox" />
                 </label>
-              </th>
+              </th> */}
               <th>Name</th>
               <th>Price</th>
               <th>Room Size</th>
