@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import axios from "axios";
 
 const Login = () => {
   const {
@@ -33,6 +34,9 @@ const Login = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      axios.post(`${import.meta.env.VITE_API_LINK}/jwt`, user, {
+        withCredentials: true,
+      });
       navigate(location?.state ? location.state : "/");
     });
   };
@@ -41,6 +45,9 @@ const Login = () => {
     google()
       .then((data) => {
         console.log(data);
+        const email = data.user.email;
+        const user = { email };
+
         Swal.fire({
           position: "center",
           icon: "success",
@@ -48,6 +55,9 @@ const Login = () => {
           text: `welcome ${data?.user?.displayName}`,
           showConfirmButton: false,
           timer: 1000,
+        });
+        axios.post(`${import.meta.env.VITE_API_LINK}/jwt`, user, {
+          withCredentials: true,
         });
         navigate(location?.state ? location.state : "/");
       })
@@ -67,6 +77,9 @@ const Login = () => {
           text: `welcome ${data?.user?.displayName}`,
           showConfirmButton: false,
           timer: 1000,
+        });
+        axios.post(`${import.meta.env.VITE_API_LINK}/jwt`, user, {
+          withCredentials: true,
         });
         navigate(location?.state ? location.state : "/");
       })

@@ -6,6 +6,7 @@ import Login from "../Components/Login/Login";
 import Register from "../Components/Register/Register";
 import Rooms from "../Components/Rooms/Rooms";
 import RoomDetails from "../Components/Rooms/RoomDetails";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,11 @@ const router = createBrowserRouter([
       },
       {
         path: "roomDetails/:id",
-        element: <RoomDetails />,
+        element: (
+          <PrivateRoute>
+            <RoomDetails />
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_LINK}/roomDetails/${params.id}`),
       },

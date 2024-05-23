@@ -19,7 +19,7 @@ const Map = () => {
         />
         <Marker position={center}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            Here are we. <br /> Come and Enjoy.
           </Popup>
         </Marker>
       </MapContainer>

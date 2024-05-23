@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import auth from "../../Firebase/firebase.config";
+import axios from "axios";
 
 // or via CommonJS
 
@@ -61,6 +62,9 @@ const Register = () => {
         });
 
         // toast.success("Successfully registered");
+        axios.post(`${import.meta.env.VITE_API_LINK}/jwt`, user, {
+          withCredentials: true,
+        });
         navigate(location?.state ? location.state : "/");
         console.log("registerd Successfull");
       })
