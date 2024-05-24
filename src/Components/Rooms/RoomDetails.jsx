@@ -2,12 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import moment from "moment";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const RoomDetails = () => {
   const { user } = useContext(AuthContext);
   console.log(user);
   const room = useLoaderData();
   const {
+    _id,
     roomDescription,
     pricePerNight,
     roomSize,
@@ -49,12 +52,49 @@ const RoomDetails = () => {
     e.preventDefault();
     const start = moment(startDate);
     const end = moment(endDate);
+    const userEmail = user.email;
+    const roomId = _id;
+    console.log(userEmail);
+    const data = { userEmail, roomId, start, end };
 
     if (end.isBefore(start)) {
       setError("End date cannot be before start date.");
     } else {
-      // Proceed with form submission logic
-      console.log("Form submitted successfully");
+      axios
+        .post(`${import.meta.env.VITE_API_LINK}/bookingCollection`, data, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.insertedId) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Room Booked Successfull",
+              // text: `Welcome ${data?.user?.displayName}`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else if (res.data === "This room already booked") {
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: res.data,
+              // text: `Welcome ${data?.user?.displayName}`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Something went wrong",
+              // text: `Welcome ${data?.user?.displayName}`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
     }
   };
 

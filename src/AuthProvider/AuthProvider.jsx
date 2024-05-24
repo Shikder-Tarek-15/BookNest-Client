@@ -59,7 +59,7 @@ const AuthProvider = ({ children }) => {
 
       if (currentUser) {
         axios
-          .post("http://localhost:5000/jwt", loggedUser, {
+          .post(`${import.meta.env.VITE_API_LINK}/jwt`, loggedUser, {
             withCredentials: true,
           })
           .then((res) => {
@@ -67,7 +67,7 @@ const AuthProvider = ({ children }) => {
           });
       } else {
         axios
-          .post("http://localhost:5000/logOut", loggedUser, {
+          .post(`${import.meta.env.VITE_API_LINK}/logOut`, loggedUser, {
             withCredentials: true,
           })
           .then((res) => {

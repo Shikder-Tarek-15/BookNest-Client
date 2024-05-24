@@ -7,6 +7,7 @@ import Register from "../Components/Register/Register";
 import Rooms from "../Components/Rooms/Rooms";
 import RoomDetails from "../Components/Rooms/RoomDetails";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import MyBookings from "../Components/MyBookings/MyBookings";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_LINK}/roomDetails/${params.id}`),
+      },
+      {
+        path: "my-bookings",
+        element: (
+          <PrivateRoute>
+            <MyBookings />
+          </PrivateRoute>
+        ),
       },
     ],
   },

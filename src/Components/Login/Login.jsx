@@ -34,10 +34,15 @@ const Login = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      axios.post(`${import.meta.env.VITE_API_LINK}/jwt`, user, {
-        withCredentials: true,
-      });
-      navigate(location?.state ? location.state : "/");
+      axios
+        .post(`${import.meta.env.VITE_API_LINK}/jwt`, user, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          if (res.data.success) {
+            navigate(location?.state ? location.state : "/");
+          }
+        });
     });
   };
 
@@ -56,10 +61,15 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1000,
         });
-        axios.post(`${import.meta.env.VITE_API_LINK}/jwt`, user, {
-          withCredentials: true,
-        });
-        navigate(location?.state ? location.state : "/");
+        axios
+          .post(`${import.meta.env.VITE_API_LINK}/jwt`, user, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            if (res.data.success) {
+              navigate(location?.state ? location.state : "/");
+            }
+          });
       })
       .catch((error) => {
         console.error(error);

@@ -62,11 +62,15 @@ const Register = () => {
         });
 
         // toast.success("Successfully registered");
-        axios.post(`${import.meta.env.VITE_API_LINK}/jwt`, user, {
-          withCredentials: true,
-        });
-        navigate(location?.state ? location.state : "/");
-        console.log("registerd Successfull");
+        axios
+          .post(`${import.meta.env.VITE_API_LINK}/jwt`, user, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            if (res.data.success) {
+              navigate(location?.state ? location.state : "/");
+            }
+          });
       })
       .catch((error) => {
         if (error.message === "Firebase: Error (auth/email-already-in-use).") {
