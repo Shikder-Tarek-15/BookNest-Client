@@ -2,10 +2,13 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Link } from "react-router-dom";
+import { FaRegEdit } from "react-icons/fa";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 const MyBookings = () => {
   const [myBooks, setMyBooks] = useState([]);
   const { user } = useContext(AuthContext);
+  const { userEmail, roomImage, roomDescription, roomId, start, end } = myBooks;
   const email = user.email;
   useEffect(() => {
     axios
@@ -13,9 +16,21 @@ const MyBookings = () => {
         withCredentials: true,
       })
       .then((res) => {
-        setMyBooks([]);
+        setMyBooks(res.data);
       });
   }, [email]);
+
+  //   useEffect(()=>{
+  //     axios
+  //       .get(`${import.meta.env.VITE_API_LINK}/filteredRooms`, filterData)
+  //       .then((data) => {
+  //       });
+  //   },[])
+
+  const handleEdit = () => {};
+
+  const handleDelete = () => {};
+
   return (
     <div>
       <h2
@@ -43,7 +58,38 @@ const MyBookings = () => {
             <th>Time</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {myBooks.map((book, idx) => (
+            <tr key={idx}>
+              <td>{idx + 1}</td>
+              <td>
+                <div className="flex items-center gap-3">
+                  <div className="avatar">
+                    <div className="mask mask-squircle w-12 h-12">
+                      <img src={book?.roomImage} />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="font-bold">{book.roomDescription}</div>
+                  </div>
+                </div>
+              </td>
+              <td>I am</td>
+              <td>{book.comment}</td>
+              <td>{new Date(book.time).toLocaleDateString()}</td>
+              <td>
+                <button onClick={handleEdit} className="text-xl">
+                  <FaRegEdit />
+                </button>
+              </td>
+              <td>
+                <button onClick={handleDelete} className="text-xl">
+                  <RiDeleteBin6Line />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

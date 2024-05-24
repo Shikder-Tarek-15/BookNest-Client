@@ -23,29 +23,42 @@ const RoomDetails = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [error, setError] = useState("");
-  const [userHasBooked, setUserHasBooked] = useState(false);
+  const [roomHasBooked, setRoomHasBooked] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
 
   // This function should check if the user has booked the room.
   // For now, let's assume we have a simple function that sets this state.
   useEffect(() => {
-    // Replace this with actual logic to check booking status
-    const checkBookingStatus = () => {
-      // Example: setUserHasBooked(true); if user has booked the room
-      setUserHasBooked(true); // Assuming the user has booked for demonstration
-    };
-    checkBookingStatus();
-  }, []);
+    const roomId = _id;
+    console.log(roomId);
+    const data = { roomId };
+
+    axios
+      .post(`${import.meta.env.VITE_API_LINK}/checkBooked`, data, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("CheckBooked Response:", res.data);
+        if (res.data.length > 0) {
+          setRoomHasBooked(true);
+        } else {
+          setRoomHasBooked(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error checking booking status:", error);
+      });
+  }, [_id, roomHasBooked]);
 
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
-    setError(""); // Clear error when date changes
+    setError("");
   };
 
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
-    setError(""); // Clear error when date changes
+    setError("");
   };
 
   const handleSubmit = (e) => {
@@ -55,7 +68,7 @@ const RoomDetails = () => {
     const userEmail = user.email;
     const roomId = _id;
     console.log(userEmail);
-    const data = { userEmail, roomId, start, end };
+    const data = { userEmail, roomDescription, roomImage, roomId, start, end };
 
     if (end.isBefore(start)) {
       setError("End date cannot be before start date.");
@@ -98,11 +111,11 @@ const RoomDetails = () => {
     }
   };
 
-  const handleReviewSubmit = (e) => {
-    e.preventDefault();
-    // Add logic to submit the review
-    console.log("Review submitted:", reviewText, reviewRating);
-  };
+  // const handleReviewSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Add logic to submit the review
+  //   console.log("Review submitted:", reviewText, reviewRating);
+  // };
 
   return (
     <div className=" mt-12 ">
@@ -176,12 +189,22 @@ const RoomDetails = () => {
                 </label>
                 {error && <p className="text-red-500">{error}</p>}
                 <div className="flex justify-end mt-5">
-                  <button
-                    className="btn bg-orange-500 text-white"
-                    type="submit"
-                  >
-                    Book Now
-                  </button>
+                  {roomHasBooked ? (
+                    <button
+                      disabled
+                      className="btn bg-orange-500 text-white "
+                      type="submit"
+                    >
+                      Already Booked
+                    </button>
+                  ) : (
+                    <button
+                      className="btn bg-orange-500 text-white"
+                      type="submit"
+                    >
+                      Book Now
+                    </button>
+                  )}
                 </div>
               </form>
             </div>
@@ -190,7 +213,7 @@ const RoomDetails = () => {
       </div>
 
       {/* Review Form */}
-      {userHasBooked && (
+      {/* {roomHasBooked && (
         <div className="mt-12 p-5 bg-base-200 rounded-xl">
           <h2 className="text-2xl font-bold mb-4">Write a Review</h2>
           <form onSubmit={handleReviewSubmit}>
@@ -234,13 +257,13 @@ const RoomDetails = () => {
             </div>
           </form>
         </div>
-      )}
+      )} */}
 
       <h2 className="text-3xl font-bold text-center mt-5 mb-5">User Reviews</h2>
       <div className="overflow-x-auto">
         {reviews.length === 0 && (
           <p className="font-bold text-center">
-            No review available.. Please Write a review for this room
+            No review available.. Please Write a review from My Booking section
           </p>
         )}
         <table className={`table ${reviews.length === 0 ? "hidden" : ""}`}>
