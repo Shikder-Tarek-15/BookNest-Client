@@ -1,12 +1,27 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 import RoomCard from "./RoomCard";
-import { useState } from "react";
-import axios from "axios";
 
 const Rooms = () => {
   const data = useLoaderData();
   const [rooms, setRooms] = useState(data);
+
+  useEffect(() => {
+    const updateRoomAvailability = async () => {
+      try {
+        await axios.patch(
+          `${import.meta.env.VITE_API_LINK}/updateRoomAvailability`
+        );
+      } catch (error) {
+        console.error("Error updating room availability:", error);
+      }
+    };
+
+    updateRoomAvailability();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const start = parseInt(e.target.start.value);

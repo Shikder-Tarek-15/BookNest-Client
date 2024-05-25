@@ -1,6 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 import { useContext, useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -26,12 +27,6 @@ const MyBookings = () => {
       });
   }, [email]);
 
-  //   useEffect(()=>{
-  //     axios
-  //       .get(`${import.meta.env.VITE_API_LINK}/filteredRooms`, filterData)
-  //       .then((data) => {
-  //       });
-  //   },[])
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
     setError("");
@@ -169,6 +164,9 @@ const MyBookings = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>My Bookings</title>
+      </Helmet>
       <h2
         className="text-3xl font-bold text-center mt-6
        mb-6"
@@ -283,7 +281,7 @@ const MyBookings = () => {
                             className="btn bg-orange-500 text-white"
                             type="submit"
                           >
-                            Book Now
+                            Update Now
                           </button>
                         </div>
                       </form>
@@ -297,7 +295,7 @@ const MyBookings = () => {
                   className="modal modal-bottom sm:modal-middle"
                 >
                   <div className="modal-box">
-                    <h3 className="font-bold text-lg">Update Booking</h3>
+                    <h3 className="font-bold text-lg">Rating</h3>
                     <div>
                       <form
                         method="dialog"
