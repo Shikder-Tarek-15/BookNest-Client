@@ -11,6 +11,8 @@ const MyBookings = () => {
   const [myBooks, setMyBooks] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
   const [error, setError] = useState("");
   const { user } = useContext(AuthContext);
   const email = user.email;
@@ -40,8 +42,7 @@ const MyBookings = () => {
     setError("");
   };
 
-  const handleSubmit = (_id) => {
-    // e.preventDefault();
+  const handleEdit = (_id) => {
     const start = moment(startDate);
     const end = moment(endDate);
     const userEmail = user.email;
@@ -111,6 +112,61 @@ const MyBookings = () => {
     });
   };
 
+  const handleRatingChange = (e) => {
+    setRating(e.target.value);
+  };
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  const handleReview = (id) => {
+    const submitTime = new Date().toISOString();
+    console.log(submitTime);
+    const data = {
+      id,
+      rating,
+      comment,
+      submitTime,
+    };
+
+    axios
+      .patch(`${import.meta.env.VITE_API_LINK}/submitReview`, data, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.modifiedCount > 0) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Review Submitted Successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setRating("");
+          setComment("");
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Failed to Submit Review",
+            text: res.data.message,
+            showConfirmButton: true,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting review:", error);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Failed to Submit Review",
+          text: "An error occurred while submitting your review.",
+          showConfirmButton: true,
+        });
+      });
+  };
+
   return (
     <div>
       <h2
@@ -174,8 +230,18 @@ const MyBookings = () => {
                     <RiDeleteBin6Line />
                   </button>
                 </td>
+                <td>
+                  <button
+                    onClick={() =>
+                      document.getElementById("my_modal_6").showModal()
+                    }
+                    className="text-x btn bg-orange-500 text-white"
+                  >
+                    Review
+                  </button>
+                </td>
 
-                {/* Modal section */}
+                {/* Edit Modal section */}
                 <dialog
                   id="my_modal_5"
                   className="modal modal-bottom sm:modal-middle"
@@ -185,7 +251,7 @@ const MyBookings = () => {
                     <div>
                       <form
                         method="dialog"
-                        onSubmit={() => handleSubmit(book._id)}
+                        onSubmit={() => handleEdit(book._id)}
                       >
                         <label className="form-control w-full max-w-xs">
                           <div className="label">
@@ -218,6 +284,73 @@ const MyBookings = () => {
                             type="submit"
                           >
                             Book Now
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </dialog>
+                {/* Edit modal End */}
+                {/* Review modal */}
+                <dialog
+                  id="my_modal_6"
+                  className="modal modal-bottom sm:modal-middle"
+                >
+                  <div className="modal-box">
+                    <h3 className="font-bold text-lg">Update Booking</h3>
+                    <div>
+                      <form
+                        method="dialog"
+                        onSubmit={() => handleReview(book.roomId)}
+                      >
+                        <label className="form-control w-full max-w-xs">
+                          <div className="label">
+                            <span className="label-text">Username</span>
+                          </div>
+                          <input
+                            type="text"
+                            name="name"
+                            defaultValue={user.displayName}
+                            disabled
+                            className="input input-bordered w-full max-w-xs"
+                            required
+                          />
+                        </label>
+                        <label className="form-control w-full max-w-xs">
+                          <div className="label">
+                            <span className="label-text">Rating</span>
+                          </div>
+                          <input
+                            type="text"
+                            name="rating"
+                            value={rating}
+                            onChange={handleRatingChange}
+                            placeholder="Enter rating 1-5"
+                            className="input input-bordered w-full max-w-xs"
+                            required
+                          />
+                        </label>
+                        <label className="form-control w-full max-w-xs">
+                          <div className="label">
+                            <span className="label-text">Comment</span>
+                          </div>
+                          <input
+                            type="text"
+                            name="comment"
+                            value={comment}
+                            onChange={handleCommentChange}
+                            placeholder="Enter Comment"
+                            className="input input-bordered w-full max-w-xs"
+                            required
+                          />
+                        </label>
+
+                        <div className=" mt-5 modal-action">
+                          <button
+                            className="btn bg-orange-500 text-white"
+                            type="submit"
+                          >
+                            Submit
                           </button>
                         </div>
                       </form>
