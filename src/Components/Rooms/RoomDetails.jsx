@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useLoaderData } from "react-router-dom";
-import moment from "moment";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
 import axios from "axios";
+import moment from "moment";
+import React, { useContext, useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const RoomDetails = () => {
   const { user } = useContext(AuthContext);

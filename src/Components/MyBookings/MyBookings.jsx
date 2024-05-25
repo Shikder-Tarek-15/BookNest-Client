@@ -1,14 +1,18 @@
 import axios from "axios";
+import moment from "moment";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
-import { Link } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const MyBookings = () => {
   const [myBooks, setMyBooks] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [error, setError] = useState("");
   const { user } = useContext(AuthContext);
-  const { userEmail, roomImage, roomDescription, roomId, start, end } = myBooks;
   const email = user.email;
   useEffect(() => {
     axios
@@ -26,10 +30,86 @@ const MyBookings = () => {
   //       .then((data) => {
   //       });
   //   },[])
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+    setError("");
+  };
 
-  const handleEdit = () => {};
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+    setError("");
+  };
 
-  const handleDelete = () => {};
+  const handleSubmit = (_id) => {
+    // e.preventDefault();
+    const start = moment(startDate);
+    const end = moment(endDate);
+    const userEmail = user.email;
+    const roomId = _id;
+    console.log(userEmail);
+    const data = { userEmail, roomId, start, end };
+
+    if (end.isBefore(start)) {
+      setError("End date cannot be before start date.");
+    } else {
+      axios
+        .patch(`${import.meta.env.VITE_API_LINK}/updateBooking`, data, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.modifiedCount > 0) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Updated Successfully",
+              // text: `Welcome ${data?.user?.displayName}`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Something went wrong",
+              // text: `Welcome ${data?.user?.displayName}`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
+    }
+  };
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(id);
+        axios
+          .delete(`${import.meta.env.VITE_API_LINK}/deleteBooking/${id}`)
+          .then((res) => {
+            if (res.data.deletedCount > 0) {
+              const filteredData = myBooks.filter((book) => book._id !== id);
+              setMyBooks(filteredData);
+
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your booking has been deleted.",
+                icon: "success",
+              });
+            }
+          });
+      }
+    });
+  };
 
   return (
     <div>
@@ -48,49 +128,107 @@ const MyBookings = () => {
           to book
         </p>
       )}
-      <table className={`table ${myBooks.length === 0 ? "hidden" : ""}`}>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Rating</th>
-            <th>Comment</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {myBooks.map((book, idx) => (
-            <tr key={idx}>
-              <td>{idx + 1}</td>
-              <td>
-                <div className="flex items-center gap-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
-                      <img src={book?.roomImage} />
+      <div className="overflow-x-auto">
+        <table className={`table ${myBooks.length === 0 ? "hidden" : ""} `}>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {myBooks.map((book, idx) => (
+              <tr key={idx}>
+                <td>{idx + 1}</td>
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle w-12 h-12">
+                        <img src={book?.roomImage} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-bold">{book.roomDescription}</div>
                     </div>
                   </div>
-                  <div>
-                    <div className="font-bold">{book.roomDescription}</div>
+                </td>
+                <td>{new Date(book.start).toLocaleDateString()}</td>
+                <td>{new Date(book.end).toLocaleDateString()}</td>
+                <td>
+                  <button
+                    className="btn"
+                    onClick={() =>
+                      document.getElementById("my_modal_5").showModal()
+                    }
+                  >
+                    <FaRegEdit />
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(book._id)}
+                    className="text-xl"
+                  >
+                    <RiDeleteBin6Line />
+                  </button>
+                </td>
+
+                {/* Modal section */}
+                <dialog
+                  id="my_modal_5"
+                  className="modal modal-bottom sm:modal-middle"
+                >
+                  <div className="modal-box">
+                    <h3 className="font-bold text-lg">Update Booking</h3>
+                    <div>
+                      <form
+                        method="dialog"
+                        onSubmit={() => handleSubmit(book._id)}
+                      >
+                        <label className="form-control w-full max-w-xs">
+                          <div className="label">
+                            <span className="label-text">Start Date</span>
+                          </div>
+                          <input
+                            type="date"
+                            value={startDate}
+                            onChange={handleStartDateChange}
+                            className="input input-bordered w-full max-w-xs"
+                            required
+                          />
+                        </label>
+                        <label className="form-control w-full max-w-xs">
+                          <div className="label">
+                            <span className="label-text">End Date</span>
+                          </div>
+                          <input
+                            type="date"
+                            value={endDate}
+                            onChange={handleEndDateChange}
+                            className="input input-bordered w-full max-w-xs"
+                            required
+                          />
+                        </label>
+                        {error && <p className="text-red-500">{error}</p>}
+                        <div className="flex mt-5 modal-action">
+                          <button
+                            className="btn bg-orange-500 text-white"
+                            type="submit"
+                          >
+                            Book Now
+                          </button>
+                        </div>
+                      </form>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td>I am</td>
-              <td>{book.comment}</td>
-              <td>{new Date(book.time).toLocaleDateString()}</td>
-              <td>
-                <button onClick={handleEdit} className="text-xl">
-                  <FaRegEdit />
-                </button>
-              </td>
-              <td>
-                <button onClick={handleDelete} className="text-xl">
-                  <RiDeleteBin6Line />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                </dialog>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
