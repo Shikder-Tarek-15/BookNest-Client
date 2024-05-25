@@ -1,4 +1,4 @@
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Link } from "react-router-dom";
 import {
   A11y,
   Autoplay,
@@ -6,12 +6,13 @@ import {
   Pagination,
   Scrollbar,
 } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 
 const Slider = () => {
   return (
     <Swiper
-      className="max-h-[500px]"
+      className="max-h-[500px] mt-12 rounded-xl"
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
       spaceBetween={50}
       slidesPerView={1}
@@ -26,7 +27,7 @@ const Slider = () => {
       {/* Slide-1 */}
       <SwiperSlide>
         <div
-          className="bg-cover bg-no-repeat bg-center w-full h-screen flex justify-center items-center mb-8"
+          className="bg-cover bg-no-repeat bg-center w-full h-[500px] flex justify-center items-center mb-8"
           style={{
             backgroundImage:
               "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://i.ibb.co/Jd8zSBp/hotel-1.jpg')",
@@ -34,17 +35,21 @@ const Slider = () => {
         >
           <div className="text-center space-y-5 text-white">
             <h1 className="text-3xl font-bold">
-              Lets check out our modern hotels
+              Lets check out our modern rooms
             </h1>
-            <p>Here is our most beautiful hotels</p>
-            <button className="btn-primary btn">Explore Now</button>
+            <p className="pb-5">Here is our most beautiful rooms</p>
+            <Link to="/rooms">
+              <button className="bg-orange-500 text-white border-none btn">
+                Explore Now
+              </button>
+            </Link>
           </div>
         </div>
       </SwiperSlide>
       {/* Slide-2 */}
       <SwiperSlide>
         <div
-          className="bg-cover bg-no-repeat bg-center w-full h-screen flex justify-center items-center"
+          className="bg-cover bg-no-repeat bg-center w-full h-[500px] flex justify-center items-center"
           style={{
             backgroundImage:
               "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://i.ibb.co/9tN4gZF/hotel-2.jpg')",
@@ -52,17 +57,21 @@ const Slider = () => {
         >
           <div className="text-center space-y-5 text-white">
             <h1 className="text-3xl font-bold">
-              Lets check out our modern hotels
+              Lets check out our modern rooms
             </h1>
-            <p>Here is our most beautiful hotels</p>
-            <button className="btn-primary btn">Explore Now</button>
+            <p className="pb-5">Here is our most beautiful rooms</p>
+            <Link to="/rooms">
+              <button className="bg-orange-500 text-white border-none btn">
+                Explore Now
+              </button>
+            </Link>
           </div>
         </div>
       </SwiperSlide>
       {/* Slide-3 */}
       <SwiperSlide>
         <div
-          className="bg-cover bg-no-repeat bg-center w-full h-screen flex justify-center items-center"
+          className="bg-cover bg-no-repeat bg-center w-full h-[500px] flex justify-center items-center"
           style={{
             backgroundImage:
               "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://i.ibb.co/zJfCYZY/hotel-3.webp')",
@@ -70,17 +79,21 @@ const Slider = () => {
         >
           <div className="text-center space-y-5 text-white">
             <h1 className="text-3xl font-bold">
-              Lets check out our modern hotels
+              Lets check out our modern rooms
             </h1>
-            <p>Here is our most beautiful hotels</p>
-            <button className="btn-primary btn">Explore Now</button>
+            <p className="pb-5">Here is our most beautiful rooms</p>
+            <Link to="/rooms">
+              <button className="bg-orange-500 text-white border-none btn">
+                Explore Now
+              </button>
+            </Link>
           </div>
         </div>
       </SwiperSlide>
       {/* Slide-4 */}
       <SwiperSlide>
         <div
-          className="bg-cover bg-no-repeat bg-center w-full h-screen flex justify-center items-center"
+          className="bg-cover bg-no-repeat bg-center w-full h-[500px] flex justify-center items-center"
           style={{
             backgroundImage:
               "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://i.ibb.co/xjTw9Mc/hotel-4.webp')",
@@ -88,10 +101,14 @@ const Slider = () => {
         >
           <div className="text-center space-y-5 text-white">
             <h1 className="text-3xl font-bold">
-              Lets check out our modern hotels
+              Lets check out our modern rooms
             </h1>
-            <p>Here is our most beautiful hotels</p>
-            <button className="btn-primary btn">Explore Now</button>
+            <p className="pb-5">Here is our most beautiful rooms</p>
+            <Link to="/rooms">
+              <button className="bg-orange-500 text-white border-none btn">
+                Explore Now
+              </button>
+            </Link>
           </div>
         </div>
       </SwiperSlide>

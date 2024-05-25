@@ -1,13 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
-import Root from "../Root/Root";
 import Home from "../Components/Home/Home";
-import ErrorPage from "../ErrorPage/ErrorPage";
 import Login from "../Components/Login/Login";
-import Register from "../Components/Register/Register";
-import Rooms from "../Components/Rooms/Rooms";
-import RoomDetails from "../Components/Rooms/RoomDetails";
-import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import MyBookings from "../Components/MyBookings/MyBookings";
+import Register from "../Components/Register/Register";
+import RoomDetails from "../Components/Rooms/RoomDetails";
+import Rooms from "../Components/Rooms/Rooms";
+import ErrorPage from "../ErrorPage/ErrorPage";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Root from "../Root/Root";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +18,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+        loader: () => fetch(`${import.meta.env.VITE_API_LINK}/rooms`),
       },
       {
         path: "/register",
