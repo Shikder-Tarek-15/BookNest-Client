@@ -39,7 +39,6 @@ const Rooms = () => {
       });
   };
 
-  console.log(rooms);
   return (
     <div>
       <Helmet>

@@ -12,9 +12,6 @@ const RoomCard = ({ room }) => {
     reviews,
   } = room;
 
-  // const handleClick = (id) => {
-  //   console.log(id);
-  // };
   const navigate = useNavigate();
 
   return (

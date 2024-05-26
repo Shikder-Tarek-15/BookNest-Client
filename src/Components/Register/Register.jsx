@@ -1,3 +1,4 @@
+import axios from "axios";
 import { updateProfile } from "firebase/auth";
 import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
@@ -7,7 +8,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import auth from "../../Firebase/firebase.config";
-import axios from "axios";
 
 // or via CommonJS
 
@@ -26,7 +26,6 @@ const Register = () => {
 
   const handleRegister = (data) => {
     const { name, photo, email, password } = data;
-    console.log(email, password);
 
     setError("");
 
@@ -82,7 +81,6 @@ const Register = () => {
             showConfirmButton: false,
             timer: 1000,
           });
-          console.log("Email already use");
         }
         console.error(error);
       });

@@ -13,7 +13,6 @@ const Home = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_LINK}/review`).then((res) => {
-      console.log(res.data);
       setReviews(res.data);
     });
   }, []);
@@ -68,7 +67,7 @@ const Home = () => {
           Please check it out
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-          {rooms.slice(0, 6).map((room) => (
+          {rooms?.slice(0, 6).map((room) => (
             <FeaturedRooms key={room._id} room={room}></FeaturedRooms>
           ))}
         </div>
@@ -81,7 +80,7 @@ const Home = () => {
           booking the room.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-          {reviews.map((review) => (
+          {reviews?.map((review) => (
             <ReviewCard key={review._id} review={review}></ReviewCard>
           ))}
         </div>

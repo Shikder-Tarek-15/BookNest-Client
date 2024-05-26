@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
@@ -6,7 +7,6 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import axios from "axios";
 
 const Login = () => {
   const {
@@ -25,7 +25,6 @@ const Login = () => {
     const { email, password } = data;
 
     loginUser(email, password).then((data) => {
-      console.log(data);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -49,7 +48,6 @@ const Login = () => {
   const handleGoogle = () => {
     google()
       .then((data) => {
-        console.log(data);
         const email = data.user.email;
         const user = { email };
 
@@ -79,7 +77,6 @@ const Login = () => {
   const handleGithub = () => {
     github()
       .then((data) => {
-        console.log(data);
         Swal.fire({
           position: "center",
           icon: "success",

@@ -46,8 +46,6 @@ const MyBookings = () => {
     const end = moment(endDate);
     const userEmail = user.email;
     const roomId = _id;
-    console.log(userEmail);
-    console.log("book id ", _id);
     const data = { userEmail, roomId, start, end };
 
     if (end.isBefore(start)) {
@@ -58,7 +56,6 @@ const MyBookings = () => {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data.modifiedCount > 0) {
             Swal.fire({
               position: "center",
@@ -84,7 +81,6 @@ const MyBookings = () => {
   };
 
   const handleDelete = (id, _id) => {
-    console.log("This is room id", _id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -95,12 +91,9 @@ const MyBookings = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(id);
-
         axios
           .patch(`${import.meta.env.VITE_API_LINK}/deleteBook/${id}`)
           .then((res) => {
-            console.log("delete", res.data);
             if (res.data.modifiedCount > 0) {
               axios
                 .delete(`${import.meta.env.VITE_API_LINK}/deleteBooking/${_id}`)
@@ -136,7 +129,6 @@ const MyBookings = () => {
 
   const handleReview = (id, _id) => {
     const submitTime = new Date().toISOString();
-    console.log(submitTime);
     const name = user.displayName;
     const profile = user.photoURL;
     const data = {
@@ -147,13 +139,11 @@ const MyBookings = () => {
       comment,
       submitTime,
     };
-    console.log("review id: ", id);
     axios
       .patch(`${import.meta.env.VITE_API_LINK}/submitReview`, data, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.modifiedCount > 0) {
           axios
             .post(`${import.meta.env.VITE_API_LINK}/reviewCenter`, data, {
@@ -172,7 +162,6 @@ const MyBookings = () => {
                 setComment("");
                 document.getElementById("modal-review").close();
               }
-              console.log(res.data);
             });
         } else {
           Swal.fire({

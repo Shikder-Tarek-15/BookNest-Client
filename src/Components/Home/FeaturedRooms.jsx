@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 const FeaturedRooms = ({ room }) => {
-  console.log(room);
   return (
     <Link to={`/roomDetails/${room._id}`}>
       <div className="max-w-lg  shadow-md  rounded-xl p-5 h-full shadow-orange-400 bg-base-200">

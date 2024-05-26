@@ -8,7 +8,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 const RoomDetails = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  console.log(user);
+
   const room = useLoaderData();
   const {
     _id,
@@ -28,7 +28,6 @@ const RoomDetails = () => {
 
   useEffect(() => {
     const roomId = _id;
-    console.log(roomId);
     const data = { roomId };
 
     axios
@@ -36,7 +35,6 @@ const RoomDetails = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("CheckBooked Response:", res.data);
         if (res.data.length > 0) {
           setRoomHasBooked(true);
         } else {
@@ -64,7 +62,6 @@ const RoomDetails = () => {
     const end = moment(endDate);
     const userEmail = user.email;
     const roomId = _id;
-    console.log(userEmail);
     const data = { userEmail, roomDescription, roomImage, roomId, start, end };
 
     if (end.isBefore(start)) {
@@ -75,12 +72,10 @@ const RoomDetails = () => {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data.insertedId) {
             axios
               .patch(`${import.meta.env.VITE_API_LINK}/book/${roomId}`)
               .then((res) => {
-                console.log("Tarek", res.data);
                 if (res.data.modifiedCount > 0) {
                   Swal.fire({
                     position: "center",
