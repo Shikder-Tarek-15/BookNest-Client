@@ -1,12 +1,13 @@
 import axios from "axios";
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const RoomDetails = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   console.log(user);
   const room = useLoaderData();
   const {
@@ -24,11 +25,7 @@ const RoomDetails = () => {
   const [endDate, setEndDate] = useState("");
   const [error, setError] = useState("");
   const [roomHasBooked, setRoomHasBooked] = useState(false);
-  const [reviewText, setReviewText] = useState("");
-  const [reviewRating, setReviewRating] = useState(0);
 
-  // This function should check if the user has booked the room.
-  // For now, let's assume we have a simple function that sets this state.
   useEffect(() => {
     const roomId = _id;
     console.log(roomId);
@@ -80,14 +77,22 @@ const RoomDetails = () => {
         .then((res) => {
           console.log(res.data);
           if (res.data.insertedId) {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Room Booked Successfull",
-              // text: `Welcome ${data?.user?.displayName}`,
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            axios
+              .patch(`${import.meta.env.VITE_API_LINK}/book/${roomId}`)
+              .then((res) => {
+                console.log("Tarek", res.data);
+                if (res.data.modifiedCount > 0) {
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Room Booked Successfull",
+                    // text: `Welcome ${data?.user?.displayName}`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                }
+              });
+            navigate("/rooms");
           } else if (res.data === "This room already booked") {
             Swal.fire({
               position: "center",
@@ -110,12 +115,6 @@ const RoomDetails = () => {
         });
     }
   };
-
-  // const handleReviewSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Add logic to submit the review
-  //   console.log("Review submitted:", reviewText, reviewRating);
-  // };
 
   return (
     <div className=" mt-12 ">
@@ -211,53 +210,6 @@ const RoomDetails = () => {
           </div>
         </div>
       </div>
-
-      {/* Review Form */}
-      {/* {roomHasBooked && (
-        <div className="mt-12 p-5 bg-base-200 rounded-xl">
-          <h2 className="text-2xl font-bold mb-4">Write a Review</h2>
-          <form onSubmit={handleReviewSubmit}>
-            <div className="mb-4">
-              <label
-                className="block text-sm font-bold mb-2"
-                htmlFor="reviewText"
-              >
-                Your Review
-              </label>
-              <textarea
-                id="reviewText"
-                className="textarea textarea-bordered w-full"
-                value={reviewText}
-                onChange={(e) => setReviewText(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                className="block text-sm font-bold mb-2"
-                htmlFor="reviewRating"
-              >
-                Rating
-              </label>
-              <input
-                id="reviewRating"
-                type="number"
-                className="input input-bordered w-full"
-                value={reviewRating}
-                onChange={(e) => setReviewRating(e.target.value)}
-                min="0"
-                max="5"
-                required
-              />
-            </div>
-            <div className="flex justify-end">
-              <button className="btn bg-orange-500 text-white" type="submit">
-                Submit Review
-              </button>
-            </div>
-          </form>
-        </div>
-      )} */}
 
       <h2 className="text-3xl font-bold text-center mt-5 mb-5">User Reviews</h2>
       <div className="overflow-x-auto">

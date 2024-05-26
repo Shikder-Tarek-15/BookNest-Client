@@ -17,7 +17,8 @@ const MyBookings = () => {
   const [error, setError] = useState("");
   const { user } = useContext(AuthContext);
   const email = user.email;
-  useEffect(() => {
+
+  const myBookings = () => {
     axios
       .get(`${import.meta.env.VITE_API_LINK}/myBookings/${email}`, {
         withCredentials: true,
@@ -25,7 +26,10 @@ const MyBookings = () => {
       .then((res) => {
         setMyBooks(res.data);
       });
-  }, [email]);
+  };
+  useEffect(() => {
+    myBookings();
+  }, []);
 
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
@@ -43,6 +47,7 @@ const MyBookings = () => {
     const userEmail = user.email;
     const roomId = _id;
     console.log(userEmail);
+    console.log("book id ", _id);
     const data = { userEmail, roomId, start, end };
 
     if (end.isBefore(start)) {
@@ -63,6 +68,7 @@ const MyBookings = () => {
               showConfirmButton: false,
               timer: 1500,
             });
+            myBookings();
           } else {
             Swal.fire({
               position: "center",
@@ -89,18 +95,30 @@ const MyBookings = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         console.log(id);
-        axios
-          .delete(`${import.meta.env.VITE_API_LINK}/deleteBooking/${id}`)
-          .then((res) => {
-            if (res.data.deletedCount > 0) {
-              const filteredData = myBooks.filter((book) => book._id !== id);
-              setMyBooks(filteredData);
 
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your booking has been deleted.",
-                icon: "success",
-              });
+        axios
+          .patch(`${import.meta.env.VITE_API_LINK}/deleteBook/${id}`)
+          .then((res) => {
+            console.log("delete", res.data);
+            if (res.data.modifiedCount > 0) {
+              axios
+                .delete(`${import.meta.env.VITE_API_LINK}/deleteBooking/${id}`)
+                .then((res) => {
+                  if (res.data.deletedCount > 0) {
+                    const filteredData = myBooks.filter(
+                      (book) => book._id !== id
+                    );
+                    setMyBooks(filteredData);
+
+                    Swal.fire({
+                      title: "Deleted!",
+                      text: "Your booking has been deleted.",
+                      icon: "success",
+                      showConfirmButton: false,
+                      timer: 1000,
+                    });
+                  }
+                });
             }
           });
       }
@@ -228,7 +246,7 @@ const MyBookings = () => {
                   <button
                     className="btn"
                     onClick={() =>
-                      document.getElementById("my_modal_5").showModal()
+                      document.getElementById(book._id).showModal()
                     }
                   >
                     <FaRegEdit />
@@ -255,7 +273,7 @@ const MyBookings = () => {
 
                 {/* Edit Modal section */}
                 <dialog
-                  id="my_modal_5"
+                  id={book._id}
                   className="modal modal-bottom sm:modal-middle"
                 >
                   <div className="modal-box">

@@ -1,12 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useLoaderData } from "react-router-dom";
 import RoomCard from "./RoomCard";
 
 const Rooms = () => {
-  const data = useLoaderData();
-  const [rooms, setRooms] = useState(data);
+  const [rooms, setRooms] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_API_LINK}/availableRooms`).then((res) => {
+      setRooms(res.data);
+    });
+  }, []);
 
   useEffect(() => {
     const updateRoomAvailability = async () => {
