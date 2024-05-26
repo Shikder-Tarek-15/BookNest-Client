@@ -114,7 +114,7 @@ const MyBookings = () => {
     setComment(e.target.value);
   };
 
-  const handleReview = (id) => {
+  const handleReview = (id, _id) => {
     const submitTime = new Date().toISOString();
     console.log(submitTime);
     const name = user.displayName;
@@ -127,7 +127,7 @@ const MyBookings = () => {
       comment,
       submitTime,
     };
-
+    console.log("review id: ", id);
     axios
       .patch(`${import.meta.env.VITE_API_LINK}/submitReview`, data, {
         withCredentials: true,
@@ -150,6 +150,7 @@ const MyBookings = () => {
                 });
                 setRating("");
                 setComment("");
+                document.getElementById(_id).close();
               }
               console.log(res.data);
             });
@@ -244,7 +245,7 @@ const MyBookings = () => {
                 <td>
                   <button
                     onClick={() =>
-                      document.getElementById("my_modal_6").showModal()
+                      document.getElementById(book._id).showModal()
                     }
                     className="text-x btn bg-orange-500 text-white"
                   >
@@ -304,7 +305,7 @@ const MyBookings = () => {
                 {/* Edit modal End */}
                 {/* Review modal */}
                 <dialog
-                  id="my_modal_6"
+                  id={book._id}
                   className="modal modal-bottom sm:modal-middle"
                 >
                   <div className="modal-box">
@@ -312,7 +313,10 @@ const MyBookings = () => {
                     <div>
                       <form
                         method="dialog"
-                        onSubmit={() => handleReview(book.roomId)}
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleReview(book.roomId, book._id);
+                        }}
                       >
                         <label className="form-control w-full max-w-xs">
                           <div className="label">

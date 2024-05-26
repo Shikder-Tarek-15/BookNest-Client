@@ -17,12 +17,38 @@ const Home = () => {
       setReviews(res.data);
     });
   }, []);
-  console.log(rooms);
+
+  const handleModal = () => {
+    document.getElementById("my_modal_3").showModal();
+  };
+
+  useEffect(() => {
+    handleModal();
+  }, []);
+
   return (
     <div>
       <Helmet>
         <title>Home</title>
       </Helmet>
+
+      {/* Modal  */}
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box p-0 m-0">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <img
+            className=""
+            src="https://i.ibb.co/s92xFLt/promotion.png"
+            alt=""
+          />
+        </div>
+      </dialog>
+
       <Slider />
       <div className="mt-12 text-center">
         <h2 className="font-bold text-3xl mb-5">Find Us Easily!</h2>
