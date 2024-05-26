@@ -117,8 +117,12 @@ const MyBookings = () => {
   const handleReview = (id) => {
     const submitTime = new Date().toISOString();
     console.log(submitTime);
+    const name = user.displayName;
+    const profile = user.photoURL;
     const data = {
       id,
+      name,
+      profile,
       rating,
       comment,
       submitTime,
@@ -131,15 +135,24 @@ const MyBookings = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.modifiedCount > 0) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Review Submitted Successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          setRating("");
-          setComment("");
+          axios
+            .post(`${import.meta.env.VITE_API_LINK}/reviewCenter`, data, {
+              withCredentials: true,
+            })
+            .then((res) => {
+              if (res.data.insertedId) {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Review Submitted Successfully",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                setRating("");
+                setComment("");
+              }
+              console.log(res.data);
+            });
         } else {
           Swal.fire({
             position: "center",
