@@ -83,7 +83,7 @@ const MyBookings = () => {
     }
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, _id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -102,7 +102,7 @@ const MyBookings = () => {
             console.log("delete", res.data);
             if (res.data.modifiedCount > 0) {
               axios
-                .delete(`${import.meta.env.VITE_API_LINK}/deleteBooking/${id}`)
+                .delete(`${import.meta.env.VITE_API_LINK}/deleteBooking/${_id}`)
                 .then((res) => {
                   if (res.data.deletedCount > 0) {
                     const filteredData = myBooks.filter(
@@ -168,7 +168,7 @@ const MyBookings = () => {
                 });
                 setRating("");
                 setComment("");
-                document.getElementById(_id).close();
+                document.getElementById("modal-review").close();
               }
               console.log(res.data);
             });
@@ -254,7 +254,7 @@ const MyBookings = () => {
                 </td>
                 <td>
                   <button
-                    onClick={() => handleDelete(book._id)}
+                    onClick={() => handleDelete(book.roomId, book._id)}
                     className="text-xl"
                   >
                     <RiDeleteBin6Line />
@@ -263,7 +263,7 @@ const MyBookings = () => {
                 <td>
                   <button
                     onClick={() =>
-                      document.getElementById(book._id).showModal()
+                      document.getElementById("modal-review").showModal()
                     }
                     className="text-x btn bg-orange-500 text-white"
                   >
@@ -323,7 +323,7 @@ const MyBookings = () => {
                 {/* Edit modal End */}
                 {/* Review modal */}
                 <dialog
-                  id={book._id}
+                  id="modal-review"
                   className="modal modal-bottom sm:modal-middle"
                 >
                   <div className="modal-box">
