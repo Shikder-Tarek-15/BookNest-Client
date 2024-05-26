@@ -84,6 +84,7 @@ const MyBookings = () => {
   };
 
   const handleDelete = (id, _id) => {
+    console.log("This is room id", _id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -109,6 +110,7 @@ const MyBookings = () => {
                       (book) => book._id !== id
                     );
                     setMyBooks(filteredData);
+                    myBookings();
 
                     Swal.fire({
                       title: "Deleted!",
