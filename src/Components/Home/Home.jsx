@@ -12,9 +12,11 @@ const Home = () => {
   const rooms = useLoaderData();
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_LINK}/review`).then((res) => {
-      setReviews(res.data);
-    });
+    axios
+      .get(`${import.meta.env.VITE_API_LINK}/review`, { withCredentials: true })
+      .then((res) => {
+        setReviews(res.data);
+      });
   }, []);
 
   const handleModal = () => {

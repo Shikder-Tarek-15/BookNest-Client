@@ -15,7 +15,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const { loginUser, google, github } = useContext(AuthContext);
+  const { user, loginUser, google, github } = useContext(AuthContext);
   const [show, setShow] = useState(true);
   // Navigate
   const navigate = useNavigate();

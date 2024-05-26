@@ -7,9 +7,13 @@ const Rooms = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_LINK}/availableRooms`).then((res) => {
-      setRooms(res.data);
-    });
+    axios
+      .get(`${import.meta.env.VITE_API_LINK}/availableRooms`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setRooms(res.data);
+      });
   }, []);
 
   useEffect(() => {
