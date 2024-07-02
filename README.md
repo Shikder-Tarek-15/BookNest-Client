@@ -24,14 +24,14 @@ Follow these steps to set up the project locally:
 
 ## Feature
 
-### Responsive Design: Ensures a consistent experience across mobile, tablet, and desktop devices.
+* Responsive Design: Ensures a consistent experience across mobile, tablet, and desktop devices.
 
-### User Authentication: Secure login via email/password or Google authentication using Firebase.
+* User Authentication: Secure login via email/password or Google authentication using Firebase.
 
-### Detailed Room Listings: Each room includes descriptions, prices, availability, images, and user reviews.
+* Detailed Room Listings: Each room includes descriptions, prices, availability, images, and user reviews.
 
-### Dynamic Booking System: Easy room booking with a date picker, booking summaries, and support for date changes and cancellations.
+* Dynamic Booking System: Easy room booking with a date picker, booking summaries, and support for date changes and cancellations.
 
-### User Reviews and Ratings: Authenticated users can post and view ratings and comments, sorted by the latest feedback.
+* User Reviews and Ratings: Authenticated users can post and view ratings and comments, sorted by the latest feedback.
 
 
