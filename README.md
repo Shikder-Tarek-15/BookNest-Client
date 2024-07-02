@@ -1,13 +1,37 @@
+## Project Overview
+Booknest is a web-based platform for hotel room bookings. It makes finding and reserving a hotel room easy and convenient, solving the common challenge of booking accommodations during travel.
+## Installation
+Follow these steps to set up the project locally:
+1. **Clone the repository:**
+  	git clone https://github.com/Shikder-Tarek-15/BookNest-Client.git
+
+2. **Navigate to the project directory:**
+  cd Artscape-gallery-Client
+
+3. **Install the dependencies:**
+  npm install
+
+4. **Start the development server:**
+  npm run dev
+
+## Server Side
+[Click Here](https://github.com/Shikder-Tarek-15/BookNest-Server)
+
+
+## Live Link
 [BookNest](https://book-nestbd.web.app/)
 
-<h2>Top Feature</h2>
 
-•	Responsive Design: The platform is fully responsive, ensuring seamless functionality and a consistent user experience across mobile, tablet, and desktop devices.
+## Feature
 
-•	User Authentication: Users can create accounts and log in using email/password or Google authentication via Firebase, ensuring secure and easy access.
+### Responsive Design: Ensures a consistent experience across mobile, tablet, and desktop devices.
 
-•	Comprehensive Room Details: Each room listing includes detailed information such as descriptions, prices, availability, images, and user reviews, helping users make informed booking decisions.
+### User Authentication: Secure login via email/password or Google authentication using Firebase.
 
-•	Dynamic Booking System: Users can book rooms with a single-day date picker, view booking summaries, and confirm bookings. The system ensures that only available rooms can be booked and supports booking date updates and cancellations.
+### Detailed Room Listings: Each room includes descriptions, prices, availability, images, and user reviews.
 
-•	User Reviews and Ratings: Authenticated users can post and view reviews for booked rooms, including ratings and comments, providing valuable feedback and enhancing trust for future users. Reviews are displayed in descending order based on timestamp to show the latest feedback first.
+### Dynamic Booking System: Easy room booking with a date picker, booking summaries, and support for date changes and cancellations.
+
+### User Reviews and Ratings: Authenticated users can post and view ratings and comments, sorted by the latest feedback.
+
+
